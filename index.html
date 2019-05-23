@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Panel | Smart Service</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected for push trigger-->
+
+
+  <script type="text/javascript">
+    function goToNextInput(e) {
+      var separatePassword = $('form.has-separate-password');
+      var key = e.which,
+        t = $(e.target),
+        sib = t.next('input');
+
+      if (key != 9 && (key < 48 || key > 57)) {
+        e.preventDefault();
+        return false;
+      }
+
+      if (key === 9) {
+        return true;
+      }
+
+      if (!sib || !sib.length) {
+        sib = $(separatePassword).find('input').eq(0);
+      }
+      sib.select().focus();
+    }
+
+    function onKeyDown(e) {
+      var key = e.which;
+
+      if (key === 9 || (key >= 48 && key <= 57)) {
+        return true;
+      }
+
+      e.preventDefault();
+      return false;
+    }
+
+    function onFocus(e) {
+      $(e.target).select();
+    }
+
+    $(document).ready(function () {
+      var separatePassword = $('form.has-separate-password');
+
+      $(separatePassword).on('keyup', 'input', goToNextInput);
+      $(separatePassword).on('keydown', 'input', onKeyDown);
+      $(separatePassword).on('click', 'input', onFocus);
+    });
+  </script>
+  </body>
+</html>
